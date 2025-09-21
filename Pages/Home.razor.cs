@@ -58,6 +58,13 @@ namespace ClassDispense.Pages
                 newPupil = new Pupil();
                 StateHasChanged();
                 await SavePupils();
+
+                Snackbar.Add("Élève ajouté", Severity.Success, config =>
+                {
+                    config.ShowCloseIcon = false;
+                    config.VisibleStateDuration = 2000; // ms
+                    config.SnackbarVariant = Variant.Filled;
+                });
             }
         }
 
@@ -65,6 +72,13 @@ namespace ClassDispense.Pages
         {
             pupils.Remove(pupil);
             await SavePupils();
+
+            Snackbar.Add("Élève supprimé", Severity.Error, config =>
+            {
+                config.ShowCloseIcon = false;
+                config.VisibleStateDuration = 2000; // ms
+                config.SnackbarVariant = Variant.Filled;
+            });
         }
 
         async Task ExportCsv()
