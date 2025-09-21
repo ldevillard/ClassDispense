@@ -37,3 +37,14 @@ window.loadPupils = async () => {
         request.onerror = () => reject(request.error);
     });
 };
+
+window.downloadFile = (filename, content) => {
+    const type = filename.endsWith(".csv") ? "text/csv" : "application/json";
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+};

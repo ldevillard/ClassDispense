@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Microsoft.JSInterop;
+using System.Text;
 
 namespace ClassDispense.Pages
 {
@@ -28,7 +29,7 @@ namespace ClassDispense.Pages
         {
             if (firstRender)
             {
-                pupils = await JS.InvokeAsync<List<Pupil>>("loadPupils") ?? new List<Pupil>();
+                await LoadPupils();
                 StateHasChanged();
             }
         }
@@ -64,6 +65,23 @@ namespace ClassDispense.Pages
         {
             pupils.Remove(pupil);
             await SavePupils();
+        }
+
+        async Task ExportCsv()
+        {
+            var csv = new StringBuilder();
+            
+            csv.AppendLine("Date de sauvegarde: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+            csv.AppendLine();
+            csv.AppendLine("Nom, Classe, Date fin de dispense, Jours restants, Raison");
+            csv.AppendLine();
+            
+            foreach (var p in sortedPupils)
+            {
+                csv.AppendLine($"{p.Name}, {p.Class}, {p.DispenseEndDate:yyyy-MM-dd}, {p.DaysRemaining}, {p.Reason}");
+            }
+
+            await JS.InvokeVoidAsync("downloadFile", "eleves.csv", csv.ToString());
         }
     }
 }
