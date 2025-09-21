@@ -81,6 +81,22 @@ namespace ClassDispense.Pages
             });
         }
 
+        async Task ConfirmRemovePupil(Pupil pupil)
+        {
+            bool? result = await DialogService.ShowMessageBox(
+                "Confirmation",
+                $"Voulez-vous vraiment supprimer {pupil.Name} ?",
+                yesText: "Supprimer",
+                noText: "Annuler",
+                options: new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall }
+            );
+
+            if (result == true)
+            {
+                await RemovePupil(pupil);
+            }
+        }
+
         async Task ExportCsv()
         {
             var csv = new StringBuilder();

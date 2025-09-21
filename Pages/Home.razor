@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
 
 <PageTitle>Dispense</PageTitle>
 
@@ -61,7 +62,7 @@
             @context.Reason
         </MudTd>
         <MudTd DataLabel="Action">
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => RemovePupil(context)" />
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => ConfirmRemovePupil(context)" />
 		</MudTd>
     </RowTemplate>
 </MudTable>
