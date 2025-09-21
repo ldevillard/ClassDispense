@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "ClassDispense",
   "resources": {
-    "hash": "sha256-HfeOcvb11xnmXyn9Q30lgVDZANSScnW7sV2PU+ktoR4=",
+    "hash": "sha256-k2dL/VLdFg/dpxmkNQcGvxXH1zMZKAfXWPQjlLfDke0=",
     "jsModuleNative": {
       "dotnet.native.8.0.20.elargmqivm.js": "sha256-D0bzod5lwwSzPR43JC8TTCcZKw+3jIHOk8CZFCRj5is="
     },
@@ -17,7 +17,7 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "ClassDispense.wasm": "sha256-O87QPngeXbzzuPBAwO0zlTSkBvVN/qp6E2OjHbgjj90=",
+      "ClassDispense.wasm": "sha256-lTBKcTX2ORzhsC7UIJSRy4NE6cFTMvro0Fz+3Rtd+yA=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-89iuHISD/XnYUxI+leQKE1lYtKRCq7cCNs46WPyRmOY=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-MsjsPz2UcWV+9FCJqUvzL/cQ7uh6sCk/GP1Yxrl/STg=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-qqBilwI3yIh7CMI9sWIdoTMNWRvvNg/BN60Jv8KjT+U=",
