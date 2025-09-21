@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject IJSRuntime JS
 
 <PageTitle>Home</PageTitle>
 
@@ -22,9 +23,9 @@
 
                 <MudForm @ref="form">
                     <MudTextField @bind-Value="newPupil.Name" Label="Nom" Required="true" />
-                    <MudTextField @bind-Value="newPupil.Class" Label="Classe" Required="true" />
-                    <MudDatePicker @bind-Date="newPupil.DispenseEndDate" Label="Date fin de dispense" Required="true" />
-                    <MudTextField @bind-Value="newPupil.Reason" Label="Raison" Required="true" />
+                    <MudTextField @bind-Value="newPupil.Class" Label="Classe"/>
+                    <MudDatePicker @bind-Date="newPupil.DispenseEndDate" Label="Date fin de dispense"/>
+                    <MudTextField @bind-Value="newPupil.Reason" Label="Raison"/>
 
                     <MudButton Color="Color.Primary" Variant="Variant.Filled" Class="mt-3" OnClick="AddPupil">
                         Ajouter
@@ -35,13 +36,14 @@
     </MudItem>
 </MudGrid>
 
-<MudTable Items="pupils" Dense="true" Breakpoint="Breakpoint.None" Class="mx-4">
+<MudTable Items="sortedPupils" Dense="true" Breakpoint="Breakpoint.None" Class="mx-4">
     <HeaderContent>
         <MudTh>Nom</MudTh>
         <MudTh>Classe</MudTh>
         <MudTh>Date fin dispense</MudTh>
         <MudTh>Jours restants</MudTh>
         <MudTh>Raison</MudTh>
+        <MudTh>Action</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nom">@context.Name</MudTd>
@@ -50,10 +52,13 @@
             @context.DispenseEndDate?.ToString("dd/MM/yyyy")
         </MudTd>
         <MudTd DataLabel="Jours restants">
-            @context.DispenseDaysRemaining
+            @context.DaysRemaining
         </MudTd>
         <MudTd DataLabel="Raison">
             @context.Reason
         </MudTd>
+        <MudTd DataLabel="Action">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => RemovePupil(context)" />
+		</MudTd>
     </RowTemplate>
 </MudTable>

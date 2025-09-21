@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using Microsoft.JSInterop;
 
 namespace ClassDispense.Pages
 {
@@ -10,24 +11,41 @@ namespace ClassDispense.Pages
             public string Name { get; set; }
             public string Class { get; set; }
             public DateTime? DispenseEndDate { get; set; }
-            public int DispenseDaysRemaining { get; set; }
+
+            public int DaysRemaining => DispenseEndDate.HasValue ? Math.Max((DispenseEndDate.Value.Date - DateTime.Today).Days, 0) : 0;
+
             public string Reason { get; set; }
         }
 
-        List<Pupil> pupils = new List<Pupil>
-        {
-            new Pupil { Name = "Alice Johnson", Class = "5A", DispenseEndDate = DateTime.Now.AddDays(3), DispenseDaysRemaining = 3, Reason = "Medical Appointment" },
-            new Pupil { Name = "Bob Smith", Class = "6B", DispenseEndDate = DateTime.Now.AddDays(5), DispenseDaysRemaining = 5, Reason = "Family Emergency" },
-            new Pupil { Name = "Charlie Brown", Class = "5C", DispenseEndDate = DateTime.Now.AddDays(2), DispenseDaysRemaining = 2, Reason = "Sports Event" }
-        };
+        List<Pupil> pupils = new List<Pupil>();
+        IEnumerable<Pupil> sortedPupils => pupils.OrderBy(p => p.Class).ThenBy(p => p.Name);
 
         MudForm form = new MudForm();
         Pupil newPupil = new Pupil();
         private bool formVisible = false;
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                pupils = await JS.InvokeAsync<List<Pupil>>("loadPupils") ?? new List<Pupil>();
+                StateHasChanged();
+            }
+        }
+
         private void ToggleForm()
         {
             formVisible = !formVisible;
+        }
+
+        async Task LoadPupils()
+        {
+            pupils = await JS.InvokeAsync<List<Pupil>>("loadPupils") ?? new List<Pupil>();
+        }
+
+        async Task SavePupils()
+        {
+            await JS.InvokeVoidAsync("savePupils", pupils);
         }
 
         async Task AddPupil()
@@ -38,7 +56,14 @@ namespace ClassDispense.Pages
                 pupils.Add(newPupil);
                 newPupil = new Pupil();
                 StateHasChanged();
+                await SavePupils();
             }
+        }
+
+        async Task RemovePupil(Pupil pupil)
+        {
+            pupils.Remove(pupil);
+            await SavePupils();
         }
     }
 }
