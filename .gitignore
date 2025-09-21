@@ -1,0 +1,77 @@
+# Ignore .NET build artifacts
+bin/
+obj/
+
+# Node
+node_modules/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET runtime artifacts
+.DS_Store
+.vscode/
+.idea/
+.vscode/
+*.log
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# Ignore Rider project files
+.idea/
+*.sln.iml
+*.dotsettings.user
+
+# Visual Studio Code workspace file
+.vscode/*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# IIS Log files
+logs/
+*.log
+
+# User-specific files (VSCode, Rider, etc.)
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/*
+.idea/
+.vs/*
+.vs/
+
+# Backup & Miscellaneous
+*.bak
+*.tmp
+*.temp
+
+# Additional folders or files to ignore for Blazor
+wwwroot/dist/
+
+# JetBrains Rider
+.idea/
+*.dotsettings.user
+
+# Ignore configuration files
+appsettings.Development.json
+appsettings.Local.json
+
+# Others
+.vscode/
+.env
+.env.*
