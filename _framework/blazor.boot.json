@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "ClassDispense",
   "resources": {
-    "hash": "sha256-EyoTjSLdKA6Y/tBJYZCfTyioWOJouKXQtFANyEuEHbQ=",
+    "hash": "sha256-neiAnePZboHf89g2zXppGKh1zhSudHnFPfcuWKbthrY=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-D0bzod5lwwSzPR43JC8TTCcZKw+3jIHOk8CZFCRj5is="
     },
@@ -58,7 +58,7 @@
       "System.Text.RegularExpressions.wasm": "sha256-XdK403EtMu661T0Aom0jdBfkJ24MoqHATDUDfAtdnSY=",
       "System.wasm": "sha256-9DLmgOsnmEbjuZrRVFruRmVRvh/skjCDv6hQMjVZ3K8=",
       "System.Private.CoreLib.wasm": "sha256-qt+MxqFzqbdSXAVuN8/nFRArYlRsF4ycL7u+fOc7omo=",
-      "ClassDispense.wasm": "sha256-lrxagZONzml/MMNXJuGX06M2HOE11DaozJYBQ9MoG+g="
+      "ClassDispense.wasm": "sha256-vHOk3Tt8/NMpLXhARUbJNDYOhY3DR3czVmD4KdIC//8="
     }
   },
   "cacheBootResources": true,
