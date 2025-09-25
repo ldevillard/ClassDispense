@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ClassDispense.Pages
 {
-    public partial class Home : ComponentBase
+    public partial class Dispense : ComponentBase
     {
-        struct Pupil
+        struct PupilDispense
         {
             public string Name { get; set; }
             public string Class { get; set; }
@@ -18,12 +18,12 @@ namespace ClassDispense.Pages
             public string Reason { get; set; }
         }
 
-        List<Pupil> pupils = new List<Pupil>();
-        IEnumerable<Pupil> sortedPupils => pupils.OrderBy(p => p.Class).ThenBy(p => p.Name);
+        List<PupilDispense> pupils = new List<PupilDispense>();
+        IEnumerable<PupilDispense> sortedPupils => pupils.OrderBy(p => p.Class).ThenBy(p => p.Name);
 
         MudForm form = new MudForm();
-        Pupil newPupil = new Pupil();
-        private bool formVisible = false;
+        PupilDispense newPupil = new PupilDispense();
+        bool formVisible = false;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -34,19 +34,19 @@ namespace ClassDispense.Pages
             }
         }
 
-        private void ToggleForm()
+        void ToggleForm()
         {
             formVisible = !formVisible;
         }
 
         async Task LoadPupils()
         {
-            pupils = await JS.InvokeAsync<List<Pupil>>("loadPupils") ?? new List<Pupil>();
+            pupils = await JS.InvokeAsync<List<PupilDispense>>("loadList", "pupils") ?? new List<PupilDispense>();
         }
 
         async Task SavePupils()
         {
-            await JS.InvokeVoidAsync("savePupils", pupils);
+            await JS.InvokeVoidAsync("saveList", "pupils", pupils);
         }
 
         async Task AddPupil()
@@ -55,7 +55,7 @@ namespace ClassDispense.Pages
             if (form.IsValid)
             {
                 pupils.Add(newPupil);
-                newPupil = new Pupil();
+                newPupil = new PupilDispense();
                 StateHasChanged();
                 await SavePupils();
 
@@ -68,7 +68,7 @@ namespace ClassDispense.Pages
             }
         }
 
-        async Task RemovePupil(Pupil pupil)
+        async Task RemovePupil(PupilDispense pupil)
         {
             pupils.Remove(pupil);
             await SavePupils();
@@ -81,7 +81,7 @@ namespace ClassDispense.Pages
             });
         }
 
-        async Task ConfirmRemovePupil(Pupil pupil)
+        async Task ConfirmRemovePupil(PupilDispense pupil)
         {
             bool? result = await DialogService.ShowMessageBox(
                 "Confirmation",
@@ -106,12 +106,12 @@ namespace ClassDispense.Pages
             csv.AppendLine("Nom, Classe, Date fin de dispense, Jours restants, Raison");
             csv.AppendLine();
             
-            foreach (var p in sortedPupils)
+            foreach (PupilDispense p in sortedPupils)
             {
                 csv.AppendLine($"{p.Name}, {p.Class}, {p.DispenseEndDate:yyyy-MM-dd}, {p.DaysRemaining}, {p.Reason}");
             }
 
-            await JS.InvokeVoidAsync("downloadFile", "eleves.csv", csv.ToString());
+            await JS.InvokeVoidAsync("downloadFile", "eleves_dispenses.csv", csv.ToString());
         }
     }
 }

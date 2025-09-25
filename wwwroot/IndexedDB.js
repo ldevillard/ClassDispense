@@ -1,14 +1,17 @@
 ﻿const DB_NAME = "PupilDB";
-const DB_VERSION = 1;
-const STORE_NAME = "pupils";
+const DB_VERSION = 2;
+const STORES = ["pupils", "periods", "injuries", "pai"];
 
 async function openDB() {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
         request.onupgradeneeded = (event) => {
             const db = event.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: "Id", autoIncrement: true });
+
+            for (const name of STORES) {
+                if (!db.objectStoreNames.contains(name)) {
+                    db.createObjectStore(name, { keyPath: "Id", autoIncrement: true });
+                }
             }
         };
         request.onsuccess = (event) => resolve(event.target.result);
@@ -16,27 +19,27 @@ async function openDB() {
     });
 }
 
-window.savePupils = async (pupils) => {
+window.saveList = async (storeName, list) => {
     const db = await openDB();
-    const tx = db.transaction(STORE_NAME, "readwrite");
-    const store = tx.objectStore(STORE_NAME);
+    const tx = db.transaction(storeName, "readwrite");
+    const store = tx.objectStore(storeName);
     await store.clear();
-    for (const pupil of pupils) {
-        store.add(pupil);
+    for (const item of list) {
+        store.add(item);
     }
     return tx.complete;
-};
+}
 
-window.loadPupils = async () => {
+window.loadList = async (storeName) => {
     const db = await openDB();
     return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readonly");
-        const store = tx.objectStore(STORE_NAME);
+        const tx = db.transaction(storeName, "readonly");
+        const store = tx.objectStore(storeName);
         const request = store.getAll();
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
     });
-};
+}
 
 window.downloadFile = (filename, content) => {
     const type = filename.endsWith(".csv") ? "text/csv" : "application/json";

@@ -1,12 +1,12 @@
-﻿@page "/règles"
+﻿@page "/dispenses"
 @inject IJSRuntime JS
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
 
-<PageTitle>Règles</PageTitle>
+<PageTitle>Dispense</PageTitle>
 
 <MudText Align="Align.Center" Typo="Typo.h4" Color="Color.Primary">
-    Règles
+	Dispenses
 </MudText>
 
 <br />
@@ -27,16 +27,16 @@
 
                 <MudForm @ref="form">
                     <MudTextField @bind-Value="newPupil.Name" Label="Nom" Required="true" />
-                    <MudTextField @bind-Value="newPupil.Class" Label="Classe" />
-                    <MudDatePicker @bind-Date="newPupil.PeriodDate" Label="Date de règles" />
-                    <MudTextField @bind-Value="newPupil.Note" Label="Notes" />
+                    <MudTextField @bind-Value="newPupil.Class" Label="Classe"/>
+                    <MudDatePicker @bind-Date="newPupil.DispenseEndDate" Label="Date fin de dispense"/>
+                    <MudTextField @bind-Value="newPupil.Reason" Label="Raison"/>
 
                     <MudButton Color="Color.Primary" Variant="Variant.Filled" Class="mt-3" OnClick="AddPupil">
                         Ajouter
                     </MudButton>
                 </MudForm>
-            </MudPaper>
-        </MudCollapse>
+             </MudPaper>
+		</MudCollapse>
     </MudItem>
 </MudGrid>
 
@@ -44,18 +44,25 @@
     <HeaderContent>
         <MudTh>Nom</MudTh>
         <MudTh>Classe</MudTh>
-        <MudTh>Date de règles</MudTh>
-        <MudTh>Notes</MudTh>
+        <MudTh>Date fin dispense</MudTh>
+        <MudTh>Jours restants</MudTh>
+        <MudTh>Raison</MudTh>
+        <MudTh>Action</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nom">@context.Name</MudTd>
         <MudTd DataLabel="Classe">@context.Class</MudTd>
-        <MudTd DataLabel="Date de règles">
-            @context.PeriodDate?.ToString("dd/MM/yyyy")
+        <MudTd DataLabel="Date fin dispense">
+            @context.DispenseEndDate?.ToString("dd/MM/yyyy")
         </MudTd>
-        <MudTd DataLabel="Note">@context.Note</MudTd>
+        <MudTd DataLabel="Jours restants">
+            @context.DaysRemaining
+        </MudTd>
+        <MudTd DataLabel="Raison">
+            @context.Reason
+        </MudTd>
         <MudTd DataLabel="Action">
             <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => ConfirmRemovePupil(context)" />
-        </MudTd>
+		</MudTd>
     </RowTemplate>
 </MudTable>

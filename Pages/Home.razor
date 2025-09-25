@@ -1,68 +1,10 @@
 ﻿@page "/"
-@inject IJSRuntime JS
-@inject ISnackbar Snackbar
-@inject IDialogService DialogService
+@inject NavigationManager Navigation
 
-<PageTitle>Dispense</PageTitle>
-
-<MudText Align="Align.Center" Typo="Typo.h4" Color="Color.Primary">
-	Dispenses
-</MudText>
-
-<br />
-<br />
-
-<MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Small" OnClick="@ToggleForm" Class="mb-2 mx-4">
-    @(formVisible ? "Cacher le formulaire" : "Ajouter un élève")
-</MudButton>
-
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Class="mb-2" OnClick="ExportCsv">Exporter</MudButton>
-
-<MudGrid Justify="Justify.Center" AlignItems="AlignItems.Center" Class="fill-height">
-    <MudItem xs="12" sm="8" md="6">
-        <MudCollapse Expanded="formVisible">
-
-            <MudPaper Class="pa-4 mb-4 mx-4">
-                <MudText Typo="Typo.h6" Class="mb-2">Ajouter un élève</MudText>
-
-                <MudForm @ref="form">
-                    <MudTextField @bind-Value="newPupil.Name" Label="Nom" Required="true" />
-                    <MudTextField @bind-Value="newPupil.Class" Label="Classe"/>
-                    <MudDatePicker @bind-Date="newPupil.DispenseEndDate" Label="Date fin de dispense"/>
-                    <MudTextField @bind-Value="newPupil.Reason" Label="Raison"/>
-
-                    <MudButton Color="Color.Primary" Variant="Variant.Filled" Class="mt-3" OnClick="AddPupil">
-                        Ajouter
-                    </MudButton>
-                </MudForm>
-             </MudPaper>
-		</MudCollapse>
-    </MudItem>
-</MudGrid>
-
-<MudTable Items="sortedPupils" Dense="true" Breakpoint="Breakpoint.SmAndDown" Class="mx-4 mb-5">
-    <HeaderContent>
-        <MudTh>Nom</MudTh>
-        <MudTh>Classe</MudTh>
-        <MudTh>Date fin dispense</MudTh>
-        <MudTh>Jours restants</MudTh>
-        <MudTh>Raison</MudTh>
-        <MudTh>Action</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Nom">@context.Name</MudTd>
-        <MudTd DataLabel="Classe">@context.Class</MudTd>
-        <MudTd DataLabel="Date fin dispense">
-            @context.DispenseEndDate?.ToString("dd/MM/yyyy")
-        </MudTd>
-        <MudTd DataLabel="Jours restants">
-            @context.DaysRemaining
-        </MudTd>
-        <MudTd DataLabel="Raison">
-            @context.Reason
-        </MudTd>
-        <MudTd DataLabel="Action">
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => ConfirmRemovePupil(context)" />
-		</MudTd>
-    </RowTemplate>
-</MudTable>
+@code
+{
+	protected override void OnInitialized()
+	{
+		Navigation.NavigateTo("/dispenses");
+	}
+}
